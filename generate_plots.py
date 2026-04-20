@@ -11,6 +11,7 @@ Usage
 # Create a function generate_data(seed) that returns sensor_a, sensor_b,
 # and timestamps arrays with the same parameters as in the notebook.
 # Use NumPy-style docstring with Parameters and Returns sections.
+import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -158,3 +159,36 @@ def plot_boxplot(sensor_a, sensor_b, timestamps, ax):
     ax.set_title("Sensor Temperature Distributions (Box Plot)")
     ax.legend()
     return None
+
+# Create main() that generates data, creates a 1x3 subplot figure,
+# calls each plot function, adjusts layout, and saves as sensor_analysis.png
+# at 150 DPI with tight bounding box.
+def main():
+    """Generate data, create plots, and save the analysis figure.
+
+    Parameters
+    ----------
+    None
+        This function does not take any parameters.
+
+    Returns
+    -------
+    None
+        This function saves ``sensor_analysis.png`` and does not return a value.
+    """
+    seed = 3376
+    sensor_a, sensor_b, timestamps = generate_data(seed=seed)
+
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+    plot_scatter(sensor_a, sensor_b, timestamps, axes[0])
+    plot_histogram(sensor_a, sensor_b, timestamps, axes[1])
+    plot_boxplot(sensor_a, sensor_b, timestamps, axes[2])
+
+    fig.tight_layout()
+    fig.savefig("sensor_analysis.png", dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    return None
+
+
+if __name__ == "__main__":
+    main()
