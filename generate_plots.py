@@ -179,10 +179,11 @@ def main():
     seed = 3376
     sensor_a, sensor_b, timestamps = generate_data(seed=seed)
 
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-    plot_scatter(sensor_a, sensor_b, timestamps, axes[0])
-    plot_histogram(sensor_a, sensor_b, timestamps, axes[1])
-    plot_boxplot(sensor_a, sensor_b, timestamps, axes[2])
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+    plot_scatter(sensor_a, sensor_b, timestamps, axes[0, 0])
+    plot_histogram(sensor_a, sensor_b, timestamps, axes[0, 1])
+    plot_boxplot(sensor_a, sensor_b, timestamps, axes[1, 0])
+    axes[1, 1].axis("off")  
 
     fig.tight_layout()
     fig.savefig("sensor_analysis.png", dpi=150, bbox_inches="tight")
