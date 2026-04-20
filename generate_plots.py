@@ -70,3 +70,91 @@ def plot_scatter(sensor_a, sensor_b, timestamps, ax):
     ax.set_ylabel("Temperature (°C)")
     ax.legend()
     return None
+
+# Create plot_histogram (sensor_a, sensor_b, timestamps, ax) that draws
+# the histogram plot from the notebook onto the given Axes object.
+# NumPy-style docstring. Modifies ax in place, returns None.
+def plot_histogram(sensor_a, sensor_b, timestamps, ax):
+    """Plot overlaid histograms for Sensor A and Sensor B.
+
+    Parameters
+    ----------
+    sensor_a : numpy.ndarray
+        Sensor A temperature readings.
+    sensor_b : numpy.ndarray
+        Sensor B temperature readings.
+    timestamps : numpy.ndarray
+        Timestamp array included for API consistency with other plotting
+        functions; not used by this histogram.
+    ax : matplotlib.axes.Axes
+        Existing Matplotlib axes to modify in place.
+
+    Returns
+    -------
+    None
+        This function modifies ``ax`` in place and does not return a value.
+    """
+    ax.hist(sensor_a, bins=30, alpha=0.5, color="tab:blue", label="Sensor A")
+    ax.hist(sensor_b, bins=30, alpha=0.5, color="tab:orange", label="Sensor B")
+
+    mean_a = np.mean(sensor_a)
+    mean_b = np.mean(sensor_b)
+    ax.axvline(
+        mean_a,
+        color="tab:blue",
+        linestyle="--",
+        linewidth=2,
+        label=f"Sensor A mean: {mean_a:.2f} C",
+    )
+    ax.axvline(
+        mean_b,
+        color="tab:orange",
+        linestyle="--",
+        linewidth=2,
+        label=f"Sensor B mean: {mean_b:.2f} C",
+    )
+
+    ax.set_xlabel("Temperature (C)")
+    ax.set_ylabel("Count")
+    ax.set_title("Temperature Distributions for Sensor A and Sensor B")
+    ax.legend()
+    return None
+# Create plot_boxplot (sensor_a, sensor_b, timestamps, ax) that draws
+# the box plot from the notebook onto the given Axes object.
+# NumPy-style docstring. Modifies ax in place, returns None.
+def plot_boxplot(sensor_a, sensor_b, timestamps, ax):
+    """Plot side-by-side box plots for Sensor A and Sensor B.
+
+    Parameters
+    ----------
+    sensor_a : numpy.ndarray
+        Sensor A temperature readings.
+    sensor_b : numpy.ndarray
+        Sensor B temperature readings.
+    timestamps : numpy.ndarray
+        Timestamp array included for API consistency with other plotting
+        functions; not used by this box plot.
+    ax : matplotlib.axes.Axes
+        Existing Matplotlib axes to modify in place.
+
+    Returns
+    -------
+    None
+        This function modifies ``ax`` in place and does not return a value.
+    """
+    ax.boxplot([sensor_a, sensor_b], labels=["Sensor A", "Sensor B"])
+
+    overall_mean = np.mean(np.concatenate([sensor_a, sensor_b]))
+    ax.axhline(
+        overall_mean,
+        color="gray",
+        linestyle="--",
+        linewidth=1.8,
+        label=f"Overall mean: {overall_mean:.2f} deg C",
+    )
+
+    ax.set_xlabel("Sensor")
+    ax.set_ylabel("Temperature (deg C)")
+    ax.set_title("Sensor Temperature Distributions (Box Plot)")
+    ax.legend()
+    return None
